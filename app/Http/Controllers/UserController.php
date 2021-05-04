@@ -15,9 +15,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $request->user();
     }
 
     /**
@@ -29,7 +29,7 @@ class UserController extends Controller
     {
          $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:64',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|max:20',
             'name' => 'required|string',
         ]);
         
@@ -102,5 +102,13 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+    public function logout(Request $request){   
+        if (Auth::check()) {
+            Auth::user()->token()->revoke();
+            return response()->json(['success' =>'logout_success'],200); 
+        } else {
+            return response()->json(['error' =>'api.something_went_wrong'], 500);
+        }
     }
 }
