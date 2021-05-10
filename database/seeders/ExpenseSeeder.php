@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Trip;
-class TripSeeder extends Seeder
+use App\Models\Expense;
+class ExpenseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class TripSeeder extends Seeder
      */
     public function run()
     {
-          Trip::factory()->count(100)->create();
+        Expense::factory()->count(10)->create();
     }
 }
