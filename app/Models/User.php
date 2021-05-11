@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\UserTrip;
+use App\Models\Expense;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,8 +45,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function trips(){
-        return $this->hasMany(Trip::class);
+    public function user_trips(){
+        return $this->hasMany(UserTrip::class);
+
+    }
+    public function expenses(){
+        return $this->hasMany(Expense::class);
 
     }
 

@@ -24,10 +24,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/logout', [UserController::class, 'logout']);
         Route::post('/trip/create', [TripController::class, 'create']);
         Route::get('/trips', [TripController::class, 'index']);
-        Route::get('/trips/organizer', [TripController::class, 'organizer']);
         Route::get('/expenses', [ExpenseController::class, 'index']);
+        Route::post('/expenses/addexpense', [ExpenseController::class, 'create']);
         Route::post('/trip/adduser', [UserTripController::class, 'store']);
-        Route::get('/trips/attendee', [UserTripController::class, 'attendee']);
+        Route::get('/trips/organizer', [TripController::class, 'organizer']);
+        Route::get('/trips/attendee', [TripController::class, 'attendee']);
         Route::get('/trips/attendees/{trip_id}', [UserTripController::class, 'attendees']);
     });
 

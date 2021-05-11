@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\UserTrip;
 
 class Trip extends Model
 {
@@ -21,6 +22,9 @@ class Trip extends Model
     }
      public function expenses(){
         return $this->hasMany(Expense::class);
+     }
+     public function user_trips(){
+        return $this->hasMany(UserTrip::class);
      }
 }
 

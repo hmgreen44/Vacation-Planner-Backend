@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Trip;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,11 +18,11 @@ class UserTrip extends Model
 ];
    public function user()
     {
-        return $this->hasMany(Trip::class);
+        return $this->belongsTo(User::class);
     }
    public function trip()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Trip::class);
     }
 }
 

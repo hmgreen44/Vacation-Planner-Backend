@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trip;
+use App\Models\UserTrip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 class TripController extends Controller
@@ -20,6 +21,18 @@ class TripController extends Controller
     {
         return Trip::where('organizer', $request->user()->id)->get()->toArray();
     }
+    public function attendee(Request $request)
+    {
+        $userTrips = UserTrip::where('user_id', $request->user()->id)->with("trip")->get()->toArray();
+        for($i = 0; $i < count($userTrips);$i++){
+            $userTrips[$i] = $userTrips[$i]['trip'];
+        }
+
+        return $userTrips;
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,7 +57,14 @@ class TripController extends Controller
         $trip->trip_token = $trip_token.$hash;
         $trip->save();
 
-        return Trip::where('organizer', $request->user()->id)->get()->toArray();
+
+         $userTrip = new UserTrip;
+         $userTrip->user_id = $request->user()->id;
+         $userTrip->trip_id = $trip->id;
+         $userTrip->save();
+
+
+        return $this->organizer($request);
 
 
     }

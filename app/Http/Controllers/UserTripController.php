@@ -17,16 +17,11 @@ class UserTripController extends Controller
     {
         return UserTrip::all();
     }
-    
-     public function attendee(Request $request)
-    {
-        return UserTrip::where('user_id', $request->user()->id)->with("trip")->get()->toArray();
-    }
-    
-    public function attendees($trip_id){
+     public function attendees($trip_id){
          return UserTrip::where('trip_id', $trip_id)->with("trip")->get()->toArray();
+        
     }
-
+     
     /**
      * Show the form for creating a new resource.
      *

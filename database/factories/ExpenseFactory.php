@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Expense;
+use App\Models\Trip;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ExpenseFactory extends Factory
@@ -24,7 +25,8 @@ class ExpenseFactory extends Factory
         return [
             'name' => $this->faker->realText($this->faker->numberBetween(15,30)),
             'cost' => $this->faker->numberBetween(10,100),
-            'trip_id' => \App\Models\Trip::all()->random()->id
+            'trip_id' => \App\Models\Trip::all()->random()->id,
+            'user_id' => \App\Models\User::all()->random()->id
         ];
     }
 }

@@ -20,6 +20,8 @@ class CreateExpensesTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('trip_id');
             $table->foreign('trip_id')->references('id')->on('trips');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

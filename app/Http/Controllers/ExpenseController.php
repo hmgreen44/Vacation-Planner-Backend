@@ -27,6 +27,9 @@ class ExpenseController extends Controller
         $expense = new Expense();
         $expense->name = $request->name;
         $expense->cost = $request->cost;
+        $expense->trip_id = $request->trip_id;
+        $expense->user_id = $request->user()->id;
+        $expense->save();
     }
 
     /**
