@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use App\Models\UserTrip;
 
 class ExpenseController extends Controller
 {
@@ -16,6 +17,11 @@ class ExpenseController extends Controller
     {
         return Expense::all()->toArray();
     }
+     public function tripExpenses($trip_id)
+    {
+        return Expense::where("trip_id", $trip_id)->get()->toArray();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +37,23 @@ class ExpenseController extends Controller
         $expense->user_id = $request->user()->id;
         $expense->save();
     }
+    public function createMultiple(Request $request)
+    {
+        for ($i = 0; $i < count($request->expenses);$i++){
+            $expense = new Expense();
+            $expense->name = $request->expenses[$i]['name'];
+            $expense->cost = $request->expenses[$i]['cost'];
+            $expense->trip_id = $request->trip_id;
+            $expense->user_id = $request->user()->id;
+            $expense->save();
+        }
+         $userTrips = UserTrip::where('user_id', $request->user()->id)->with("trip.expenses")->get()->toArray();
+        for($i = 0; $i < count($userTrips);$i++){
+            $userTrips[$i] = $userTrips[$i]['trip'];
+        }
 
+        return $userTrips;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -83,8 +105,14 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expense $expense)
+    public function destroy(Request $request, $id)
     {
-        //
+        Expense::destroy($id);
+        $userTrips = UserTrip::where('user_id', $request->user()->id)->with("trip.expenses")->get()->toArray();
+        for($i = 0; $i < count($userTrips);$i++){
+            $userTrips[$i] = $userTrips[$i]['trip'];
+        }
+
+        return $userTrips;
     }
 }

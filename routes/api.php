@@ -22,14 +22,26 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/user', [UserController::class, 'index']);
         // log out user
         Route::get('/logout', [UserController::class, 'logout']);
+    
+    
+    
+    
         Route::post('/trip/create', [TripController::class, 'create']);
         Route::get('/trips', [TripController::class, 'index']);
-        Route::get('/expenses', [ExpenseController::class, 'index']);
-        Route::post('/expenses/addexpense', [ExpenseController::class, 'create']);
+    
+       
         Route::post('/trip/adduser', [UserTripController::class, 'store']);
         Route::get('/trips/organizer', [TripController::class, 'organizer']);
         Route::get('/trips/attendee', [TripController::class, 'attendee']);
         Route::get('/trips/attendees/{trip_id}', [UserTripController::class, 'attendees']);
+    
+    
+        Route::get('/expenses', [ExpenseController::class, 'index']);
+        Route::get('/expenses/{id}', [ExpenseController::class, 'tripExpenses']);
+    
+        Route::post('/expenses/addexpense', [ExpenseController::class, 'create']);
+        Route::post('/expenses/addexpenses', [ExpenseController::class, 'createMultiple']);
+        Route::get('/expense/destroy/{id}', [ExpenseController::class, 'destroy']);
     });
 
 Route::post('/register', [UserController::class, 'create']);

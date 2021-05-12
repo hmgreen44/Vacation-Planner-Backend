@@ -15,15 +15,15 @@ class TripController extends Controller
      */
     public function index()
     {
-        return Trip::all()->toArray();
+        return Trip::with("expenses")->get()->toArray();
     }
     public function organizer(Request $request)
     {
-        return Trip::where('organizer', $request->user()->id)->get()->toArray();
+        return Trip::with("expenses")->where('organizer', $request->user()->id)->get()->toArray();
     }
     public function attendee(Request $request)
     {
-        $userTrips = UserTrip::where('user_id', $request->user()->id)->with("trip")->get()->toArray();
+        $userTrips = UserTrip::where('user_id', $request->user()->id)->with("trip.expenses")->get()->toArray();
         for($i = 0; $i < count($userTrips);$i++){
             $userTrips[$i] = $userTrips[$i]['trip'];
         }
